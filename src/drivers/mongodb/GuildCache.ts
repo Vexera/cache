@@ -4,7 +4,7 @@ import * as Implementations from '../../implementations';
 import * as Discord from 'discord.d.ts';
 import { Guild } from '../../types';
 
-export default class GuildCache extends BaseCache implements Implementations.GuildCache {
+export class GuildCache extends BaseCache implements Implementations.GuildCache {
   set(shardID: number, id: Discord.Snowflake<Discord.Guild>, guild: Discord.Guild | Discord.UnavailableGuild) {
     const data = {
       ...guildConverter(guild),

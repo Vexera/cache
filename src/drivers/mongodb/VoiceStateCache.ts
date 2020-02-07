@@ -4,7 +4,7 @@ import * as Implementations from '../../implementations';
 import * as Discord from 'discord.d.ts';
 import { VoiceState } from '../../types';
 
-export default class VoiceStateCache extends BaseCache implements Implementations.VoiceStateCache {
+export class VoiceStateCache extends BaseCache implements Implementations.VoiceStateCache {
   bulkAdd(shardID: number, guildID: Discord.Snowflake<Discord.Guild>, voiceStates: Partial<Discord.VoiceState>[]) {
     const ops = voiceStates.map((vs) => ({
       updateOne: {

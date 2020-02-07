@@ -4,7 +4,7 @@ import * as Implementations from '../../implementations';
 import * as Discord from 'discord.d.ts';
 import { Member, Guild } from '../../types';
 
-export default class MemberCache extends BaseCache implements Implementations.MemberCache {
+export class MemberCache extends BaseCache implements Implementations.MemberCache {
   bulkAdd(shardID: number, guildID: Discord.Snowflake<Discord.Guild>, members: Discord.GuildMember[]) {
     const ops = members.map((m) => ({
       updateOne: {

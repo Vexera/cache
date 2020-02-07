@@ -3,7 +3,7 @@ import { channel as channelConverter } from '../../CacheConverter';
 import * as Implementations from '../../implementations';
 import * as Discord from 'discord.d.ts';
 
-export default class ChannelCache extends BaseCache implements Implementations.ChannelCache {
+export class ChannelCache extends BaseCache implements Implementations.ChannelCache {
   bulkAdd(shardID: number, channels: Discord.AnyGuildChannel[]) {
     const ops = channels.map((c) => ({
       updateOne: {
