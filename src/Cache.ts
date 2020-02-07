@@ -1,29 +1,11 @@
-import * as Discord from "discord.d.ts";
+import * as Discord from 'discord.d.ts';
 import Redis from 'ioredis';
 import { EventEmitter } from 'events';
 import RedisHandler from './RedisHandler';
 import sleep from './utils/sleep';
-import { Extras, Event } from "./events";
-import { Member, VoiceState } from "./types";
-import * as Implementations from "./implementations";
-
-interface CacheOptions {
-  redis: Redis.Redis;
-  caches: {
-    channels?: Implementations.ChannelCache;
-    guilds?: Implementations.GuildCache;
-    members?: Implementations.MemberCache;
-    users?: Implementations.UserCache;
-    voiceStates?: Implementations.VoiceStateCache;
-  };
-  send: (shardID: number, event: Discord.SendableEvent) => any;
-}
-
-interface ReceiveExtras<T = any> {
-  guildWasUnavailable?: boolean;
-  queued?: boolean;
-  old?: T;
-}
+import { Extras, Event } from './events';
+import {CacheOptions, Member, ReceiveExtras, VoiceState} from './types';
+import * as Implementations from './implementations';
 
 export default class Cache extends EventEmitter {
   public send: (shardID: number, event: Discord.SendableEvent) => any;
@@ -65,7 +47,7 @@ export default class Cache extends EventEmitter {
     const extras: ReceiveExtras  = {};
 
     switch (event.t) {
-      case "IDENTIFYING": {
+      case 'IDENTIFYING': {
         this.debug(`Starting to load shard ${event.shard_id}`);
         await this.redis.enableLoadingState(event.shard_id);
         break;
@@ -213,7 +195,7 @@ export default class Cache extends EventEmitter {
           const mutuals = await this.members.getMutualGuilds(event.d.user.id);
           if (mutuals.length === 0) {
             await this.users.delete(event.d.user.id);
-  
+
             this.debug(`Deleted user ${event.d.user.id} as there are no mutual servers`, { userID: event.d.user.id });
           }
         }
@@ -266,7 +248,7 @@ export default class Cache extends EventEmitter {
       }
       case Discord.DispatchEventType.MESSAGE_CREATE: {
         if ('webhook_id' in event.d) break;
-        
+
         await this.users?.set(event.d.author.id, event.d.author);
 
         if ('guild_id' in event.d && event.d.member) {

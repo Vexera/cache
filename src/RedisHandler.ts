@@ -1,18 +1,14 @@
-import Redis from "ioredis";
-import * as Discord from "discord.d.ts";
-import { Event } from "./events";
+import { Redis } from 'ioredis';
+import * as Discord from 'discord.d.ts';
+import { Event } from './events';
 
 export default class RedisHandler {
-  private redis: Redis.Redis;
-
-  constructor(redis: Redis.Redis) {
-    this.redis = redis;
-  }
+  constructor(private redis: Redis) {}
 
   /* Shard Loading */
 
   enableLoadingState(shardID: number) {
-    return this.redis.set(`shard:${shardID}:loading`, "1");
+    return this.redis.set(`shard:${shardID}:loading`, '1');
   }
 
   disableLoadingState(shardID: number) {

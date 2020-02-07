@@ -1,4 +1,24 @@
-import * as Discord from "discord.d.ts";
+import * as Discord from 'discord.d.ts';
+import Redis from "ioredis";
+import * as Implementations from "./implementations";
+
+export interface CacheOptions {
+  redis: Redis.Redis;
+  caches: {
+    channels?: Implementations.ChannelCache;
+    guilds?: Implementations.GuildCache;
+    members?: Implementations.MemberCache;
+    users?: Implementations.UserCache;
+    voiceStates?: Implementations.VoiceStateCache;
+  };
+  send: (shardID: number, event: Discord.SendableEvent) => any;
+}
+
+export interface ReceiveExtras<T = any> {
+  guildWasUnavailable?: boolean;
+  queued?: boolean;
+  old?: T;
+}
 
 export interface VoiceState {
   _id: Discord.Snowflake<Discord.Guild & Discord.GuildMember>;
