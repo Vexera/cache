@@ -24,7 +24,6 @@ export class GuildCache extends BaseCache implements Implementations.GuildCache 
 		};
 
 		return this.redis.hset(this.hashKey, id, JSON.stringify(data));
-		// return this.collection.updateOne({ _id: id }, { $set: data }, { upsert: true });
 	}
 
 	async bulkAdd(shardID: number, guilds: Array<Discord.Guild | Discord.UnavailableGuild>) {
