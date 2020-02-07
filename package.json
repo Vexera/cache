@@ -5,7 +5,7 @@
   "main": "dist/src/index.js",
   "types": "types/src/index.d.ts",
   "exports": {
-    "./mongodb": "./dist/mongodb"
+    "./mongodb": "./dist/src/mongodb"
   },
   "scripts": {
     "test": "tsc && node dist/test/index.js",
