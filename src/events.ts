@@ -1,4 +1,4 @@
-import * as Discord from "discord.d.ts";
+import * as Discord from 'discord.d.ts';
 
 export interface Identifying {
   t: 'IDENTIFYING';

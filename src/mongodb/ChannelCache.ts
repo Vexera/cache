@@ -1,7 +1,7 @@
 import { BaseCache } from './BaseCache';
 import { channel as channelConverter } from '../CacheConverter';
-import * as Implementations from "../implementations";
-import * as Discord from "discord.d.ts";
+import * as Implementations from '../implementations';
+import * as Discord from 'discord.d.ts';
 
 export default class ChannelCache extends BaseCache implements Implementations.ChannelCache {
   bulkAdd(shardID: number, channels: Discord.AnyGuildChannel[]) {
@@ -14,7 +14,7 @@ export default class ChannelCache extends BaseCache implements Implementations.C
     }));
 
     if (ops.length > 0) this.collection.bulkWrite(ops);
-    
+
     return Promise.resolve();
   }
 

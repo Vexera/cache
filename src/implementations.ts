@@ -1,5 +1,5 @@
-import * as Discord from "discord.d.ts";
-import { Guild, Member, VoiceState, Channel, User } from "./types";
+import * as Discord from 'discord.d.ts';
+import { Guild, Member, VoiceState, Channel, User } from './types';
 
 export interface BaseCache {
   wipeByShardID(shardID: number): Promise<any>;

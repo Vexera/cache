@@ -1,7 +1,7 @@
-import { BaseCache } from "./BaseCache";
-import { user } from "../CacheConverter";
-import * as Implementations from "../implementations";
-import * as Discord from "discord.d.ts";
+import { BaseCache } from './BaseCache';
+import { user } from '../CacheConverter';
+import * as Implementations from '../implementations';
+import * as Discord from 'discord.d.ts';
 
 export default class UserCache extends BaseCache implements Implementations.UserCache {
   set(id: Discord.Snowflake<Discord.User>, data: Discord.User) {

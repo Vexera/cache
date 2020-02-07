@@ -1,6 +1,6 @@
-import removeNull, { removeNullPartial } from "./utils/removeNull";
-import * as Discord from "discord.d.ts";
-import { VoiceState, Member, User, Guild, Role, GuildCategory, GuildNewsChannel, GuildStoreChannel, GuildVoiceChannel, GuildTextChannel, Channel, Overwrite } from "./types";
+import removeNull, { removeNullPartial } from './utils/removeNull';
+import * as Discord from 'discord.d.ts';
+import { VoiceState, Member, User, Guild, Role, GuildCategory, GuildNewsChannel, GuildStoreChannel, GuildVoiceChannel, GuildTextChannel, Channel, Overwrite } from './types';
 
 /* Overwrite */
 
