@@ -40,7 +40,6 @@ export default class GuildCache extends BaseCache implements Implementations.Gui
 
     if (!guild) throw new Error('Guild not found');
 
-
     guild.roles = guild.roles.filter((r) => r.id !== data.id);
     guild.roles.push(data);
 
@@ -51,7 +50,6 @@ export default class GuildCache extends BaseCache implements Implementations.Gui
     const guild = await this.get(guildID);
 
     if (!guild) throw new Error('Guild not found');
-
 
     guild.roles = guild.roles.filter((r) => r.id !== roleID);
     return this.collection.updateOne({ _id: guildID }, { $set: { roles: guild.roles } });
