@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "esModuleInterop": true,
-    "lib": ["es2015", "esnext.asynciterable", "esnext", "dom"],
     "target": "es2019",
+    "lib": ["es2015", "esnext.asynciterable", "esnext", "dom"],
     "moduleResolution": "node",
     "sourceMap": true,
     "strict": true,
