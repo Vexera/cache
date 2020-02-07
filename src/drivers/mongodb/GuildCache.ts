@@ -1,8 +1,8 @@
 import { BaseCache } from './BaseCache';
-import { guild as guildConverter, role as roleConverter } from '../CacheConverter';
-import * as Implementations from '../implementations';
+import { guild as guildConverter, role as roleConverter } from '../../CacheConverter';
+import * as Implementations from '../../implementations';
 import * as Discord from 'discord.d.ts';
-import { Guild } from '../types';
+import { Guild } from '../../types';
 
 export default class GuildCache extends BaseCache implements Implementations.GuildCache {
   set(shardID: number, id: Discord.Snowflake<Discord.Guild>, guild: Discord.Guild | Discord.UnavailableGuild) {

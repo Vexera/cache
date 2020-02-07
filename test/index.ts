@@ -1,6 +1,6 @@
 import { Shard } from '@spectacles/gateway';
 import Cache from '../src';
-import * as MongoDB from '../src/mongodb';
+import * as MongoDB from '../src/drivers/mongodb';
 import Redis from 'ioredis';
 import { MongoClient } from 'mongodb';
 
@@ -13,7 +13,7 @@ import { MongoClient } from 'mongodb';
   const db = mongodb.db();
 
   const shard = new Shard(process.env.TOKEN, 0);
-  
+
   const cache = new Cache({
     redis: new Redis(),
     caches: {
@@ -32,7 +32,7 @@ import { MongoClient } from 'mongodb';
     t: 'IDENTIFYING',
     shard_id: 0
   });
-  
+
   cache.on('debug', console.log);
   shard.on('receive', (event) => {
     event.shard_id = 0;

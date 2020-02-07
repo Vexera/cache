@@ -1,8 +1,8 @@
 import { BaseCache } from './BaseCache';
-import { voiceState as voiceStateConverter, user } from '../CacheConverter';
-import * as Implementations from '../implementations';
+import { voiceState as voiceStateConverter, user } from '../../CacheConverter';
+import * as Implementations from '../../implementations';
 import * as Discord from 'discord.d.ts';
-import { VoiceState } from '../types';
+import { VoiceState } from '../../types';
 
 export default class VoiceStateCache extends BaseCache implements Implementations.VoiceStateCache {
   bulkAdd(shardID: number, guildID: Discord.Snowflake<Discord.Guild>, voiceStates: Partial<Discord.VoiceState>[]) {

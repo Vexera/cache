@@ -1,8 +1,8 @@
 import { BaseCache } from './BaseCache';
-import { member as memberConverter } from '../CacheConverter';
-import * as Implementations from '../implementations';
+import { member as memberConverter } from '../../CacheConverter';
+import * as Implementations from '../../implementations';
 import * as Discord from 'discord.d.ts';
-import { Member, Guild } from '../types';
+import { Member, Guild } from '../../types';
 
 export default class MemberCache extends BaseCache implements Implementations.MemberCache {
   bulkAdd(shardID: number, guildID: Discord.Snowflake<Discord.Guild>, members: Discord.GuildMember[]) {
