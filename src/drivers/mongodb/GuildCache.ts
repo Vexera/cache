@@ -36,15 +36,12 @@ export default class GuildCache extends BaseCache implements Implementations.Gui
 
   async addRole(guildID: Discord.Snowflake<Discord.Guild>, role: Discord.Role) {
     const data = roleConverter(role, guildID);
-
     const guild = await this.get(guildID);
 
-    if (!guild) {
-      throw new Error('Guild not found');
-    }
+    if (!guild) throw new Error('Guild not found');
+
 
     guild.roles = guild.roles.filter((r) => r.id !== data.id);
-
     guild.roles.push(data);
 
     return this.collection.updateOne({ _id: guildID }, { $set: { roles: guild.roles } });
@@ -53,12 +50,10 @@ export default class GuildCache extends BaseCache implements Implementations.Gui
   async removeRole(guildID: Discord.Snowflake<Discord.Guild>, roleID: Discord.Snowflake<Discord.Role>) {
     const guild = await this.get(guildID);
 
-    if (!guild) {
-      throw new Error('Guild not found');
-    }
+    if (!guild) throw new Error('Guild not found');
+
 
     guild.roles = guild.roles.filter((r) => r.id !== roleID);
-
     return this.collection.updateOne({ _id: guildID }, { $set: { roles: guild.roles } });
   }
 
