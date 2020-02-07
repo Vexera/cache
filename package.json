@@ -1,0 +1,45 @@
+{
+  "name": "@vexera/cache",
+  "version": "1.0.1",
+  "description": "Discord State Cache",
+  "main": "dist/src/index.js",
+  "types": "types/src/index.d.ts",
+  "exports": {
+    "./mongodb": "./dist/mongodb"
+  },
+  "scripts": {
+    "test": "tsc && node dist/test/index.js",
+    "lint": "eslint src/ --ext .ts",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:Vexera/cache.git"
+  },
+  "author": "Vexera Team <hello@prism.gg>",
+  "contributors": [
+    "Luke James <me@lukej.me>"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vexera/cache/issues"
+  },
+  "homepage": "https://github.com/Vexera/cache",
+  "devDependencies": {
+    "@spectacles/gateway": "^0.12.1",
+    "@spectacles/types": "^0.2.1",
+    "@types/ioredis": "^4.14.7",
+    "@types/mongodb": "^3.3.15",
+    "@types/pako": "^1.0.1",
+    "@typescript-eslint/eslint-plugin": "^2.19.0",
+    "@vexera/eslint-config": "^1.0.0",
+    "discord.d.ts": "1.0.2",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.1",
+    "ioredis": "^4.14.1",
+    "mongodb": "^3.5.2",
+    "typescript": "^3.7.5"
+  },
+  "dependencies": {}
+}

@@ -1,0 +1,6 @@
+{
+  "extends": "@vexera/eslint-config",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  }
+}
