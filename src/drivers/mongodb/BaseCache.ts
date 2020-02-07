@@ -1,11 +1,7 @@
 import { Collection } from 'mongodb';
 
 export class BaseCache {
-  public collection: Collection;
-
-  constructor(collection: Collection) {
-    this.collection = collection;
-  }
+  constructor(public collection: Collection) {}
 
   wipeByShardID(shardID: number) {
     return this.collection.deleteMany({ shardID });
