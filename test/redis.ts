@@ -19,7 +19,7 @@ import { MongoClient } from 'mongodb';
 		caches: {
 			channels: new RedisCache.ChannelCache(new Redis({ keyPrefix: 'vexera:' }), 'channelCache'),
 			guilds: new RedisCache.GuildCache(new Redis({ keyPrefix: 'vexera:' }), 'guildCache'),
-			// members: new RedisCache.MemberCache(db.collection('memberCache')),
+			members: new RedisCache.MemberCache(new Redis({ keyPrefix: 'vexera:' }), 'memberCache'),
 			// users: new RedisCache.UserCache(db.collection('userCache')),
 			// voiceStates: new RedisCache.VoiceStateCache(db.collection('voiceStates'))
 		},
@@ -28,13 +28,15 @@ import { MongoClient } from 'mongodb';
 		}
 	});
 
-	cache.guilds?.set(0, '585454996800405509', {
-		id: '585454996800405509',
+
+	const id = '2' + Math.floor(100000 + Math.random() * 900000);
+	cache.guilds?.set(0, id, {
+		id,
 		name: 'lmaooooooooooo',
 		unavailable: true
+	}).then(async () => {
+		// console.log(await cache.guilds?.get('585454996800405509'));
 	});
-
-	console.log(await cache.guilds?.get('585454996800405509'));
 
 	cache.receive({
 		t: 'IDENTIFYING',

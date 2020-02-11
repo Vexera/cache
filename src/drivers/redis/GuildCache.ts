@@ -11,7 +11,7 @@ export class GuildCache extends BaseCache implements Implementations.GuildCache 
 	}
 
 	async get(id: Discord.Snowflake<Discord.Guild>): Promise<Guild | null> {
-		const guild = await this.redis.hget(this.hashKey, 'id');
+		const guild = await this.redis.hget(this.hashKey, id);
 
 		return guild ? JSON.parse(guild) : null;
 	}
