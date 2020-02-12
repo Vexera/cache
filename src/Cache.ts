@@ -284,7 +284,7 @@ export default class Cache extends EventEmitter {
     }
   }
 
-  async processGuildQueue(guildID: Discord.Snowflake<Discord.Guild>) {
+  async processGuildQueue(guildID: Discord.GuildSnowflake) {
     while (true) {
       const event = await this.redis.popGuildQueue(guildID);
 
@@ -294,7 +294,7 @@ export default class Cache extends EventEmitter {
     }
   }
 
-  requestGuildMembers(shardID: number, guildID: Discord.Snowflake<Discord.Guild>, query = '', limit = 0) {
+  requestGuildMembers(shardID: number, guildID: Discord.GuildSnowflake, query = '', limit = 0) {
     this.send(shardID, {
       op: Discord.SendableOp.REQUEST_GUILD_MEMBERS,
       d: {
@@ -305,7 +305,7 @@ export default class Cache extends EventEmitter {
     });
   }
 
-  async isGuildUnavailable(guildID: Discord.Snowflake<Discord.Guild>) {
+  async isGuildUnavailable(guildID: Discord.GuildSnowflake) {
     if (!this.guilds) return null;
 
     const guild = await this.guilds.get(guildID);
@@ -313,7 +313,7 @@ export default class Cache extends EventEmitter {
     return !guild || guild.unavailable;
   }
 
-  async purgeUsers(guildID: Discord.Snowflake<Discord.Guild>) {
+  async purgeUsers(guildID: Discord.GuildSnowflake) {
     if (!this.members || !this.users) return;
 
     const userIDs = await this.members.getPurgeableUsers(guildID);

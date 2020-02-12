@@ -5,7 +5,7 @@ import * as Discord from 'discord.d.ts';
 import { Guild } from '../../types';
 
 export class GuildCache extends BaseCache implements Implementations.GuildCache {
-  set(shardID: number, id: Discord.Snowflake<Discord.Guild>, guild: Discord.Guild | Discord.UnavailableGuild) {
+  set(shardID: number, id: Discord.GuildSnowflake, guild: Discord.Guild | Discord.UnavailableGuild) {
     const data = {
       ...guildConverter(guild),
       _id: id,
@@ -30,11 +30,11 @@ export class GuildCache extends BaseCache implements Implementations.GuildCache 
     else return Promise.resolve();
   }
 
-  get(id: Discord.Snowflake<Discord.Guild>): Promise<Guild | null> {
+  get(id: Discord.GuildSnowflake): Promise<Guild | null> {
     return this.collection.findOne({ _id: id });
   }
 
-  async addRole(guildID: Discord.Snowflake<Discord.Guild>, role: Discord.Role) {
+  async addRole(guildID: Discord.GuildSnowflake, role: Discord.Role) {
     const data = roleConverter(role, guildID);
 
     const guild = await this.get(guildID);
@@ -50,7 +50,7 @@ export class GuildCache extends BaseCache implements Implementations.GuildCache 
     return this.collection.updateOne({ _id: guildID }, { $set: { roles: guild.roles } });
   }
 
-  async removeRole(guildID: Discord.Snowflake<Discord.Guild>, roleID: Discord.Snowflake<Discord.Role>) {
+  async removeRole(guildID: Discord.GuildSnowflake, roleID: Discord.RoleSnowflake) {
     const guild = await this.get(guildID);
 
     if (!guild) {
@@ -62,11 +62,11 @@ export class GuildCache extends BaseCache implements Implementations.GuildCache 
     return this.collection.updateOne({ _id: guildID }, { $set: { roles: guild.roles } });
   }
 
-  delete(guildID: Discord.Snowflake<Discord.Guild>) {
+  delete(guildID: Discord.GuildSnowflake) {
     return this.collection.deleteOne({ _id: guildID });
   }
 
-  async has(guildID: Discord.Snowflake<Discord.Guild>) {
+  async has(guildID: Discord.GuildSnowflake) {
     return await this.collection.find({ _id: guildID }).count() > 0;
   }
 }

@@ -5,7 +5,7 @@ import * as Discord from 'discord.d.ts';
 import { VoiceState } from '../../types';
 
 export class VoiceStateCache extends BaseCache implements Implementations.VoiceStateCache {
-  bulkAdd(shardID: number, guildID: Discord.Snowflake<Discord.Guild>, voiceStates: Partial<Discord.VoiceState>[]) {
+  bulkAdd(shardID: number, guildID: Discord.GuildSnowflake, voiceStates: Partial<Discord.VoiceState>[]) {
     const ops = voiceStates.map((vs) => ({
       updateOne: {
         filter: { _id: `${guildID}.${vs.user_id}` },
@@ -18,7 +18,7 @@ export class VoiceStateCache extends BaseCache implements Implementations.VoiceS
     else return Promise.resolve();
   }
 
-  set(shardID: number, guildID: Discord.Snowflake<Discord.Guild>, userID: Discord.Snowflake<Discord.User>, voiceState: Discord.VoiceState) {
+  set(shardID: number, guildID: Discord.GuildSnowflake, userID: Discord.UserSnowflake, voiceState: Discord.VoiceState) {
     const data = { ...voiceStateConverter(voiceState), shardID };
 
     return this.collection.updateOne(
@@ -28,19 +28,19 @@ export class VoiceStateCache extends BaseCache implements Implementations.VoiceS
     );
   }
 
-  get(guildID: Discord.Snowflake<Discord.Guild>, userID: Discord.Snowflake<Discord.User>): Promise<VoiceState | null> {
+  get(guildID: Discord.GuildSnowflake, userID: Discord.UserSnowflake): Promise<VoiceState | null> {
     return this.collection.findOne({ _id: `${guildID}.${userID}` });
   }
 
-  delete(guildID: Discord.Snowflake<Discord.Guild>, userID: Discord.Snowflake<Discord.User>) {
+  delete(guildID: Discord.GuildSnowflake, userID: Discord.UserSnowflake) {
     return this.collection.deleteOne({ _id: `${guildID}.${userID}` });
   }
 
-  deleteByGuild(guildID: Discord.Snowflake<Discord.Guild>) {
+  deleteByGuild(guildID: Discord.GuildSnowflake) {
     return this.collection.deleteMany({ guildID });
   }
 
-  async has(guildID: Discord.Snowflake<Discord.Guild>, userID: Discord.Snowflake<Discord.User>) {
+  async has(guildID: Discord.GuildSnowflake, userID: Discord.UserSnowflake) {
     return await this.collection.find({ _id: `${guildID}.${userID}` }).count() > 0;
   }
 }

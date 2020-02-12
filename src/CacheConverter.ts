@@ -87,7 +87,7 @@ export function channel(data: Partial<Discord.AnyGuildChannel>): Partial<Channel
 
 /* Role */
 
-export function role(data: Discord.Role, guildID: Discord.Snowflake<Discord.Guild>) {
+export function role(data: Discord.Role, guildID: Discord.GuildSnowflake) {
   return removeNull<Role>({
     id: data.id,
     guildID,
@@ -99,7 +99,7 @@ export function role(data: Discord.Role, guildID: Discord.Snowflake<Discord.Guil
 }
 
 /* Guild */
-export function guild(data: Partial<Discord.Guild & Discord.UnavailableGuild> & { id: Discord.Snowflake<Discord.Guild> }) {
+export function guild(data: Partial<Discord.Guild & Discord.UnavailableGuild> & { id: Discord.GuildSnowflake }) {
   return removeNull<Partial<Guild>>({
     _id: data.id,
     name: data.name,
@@ -125,7 +125,7 @@ export function user(data: Discord.User) {
 
 /* Member */
 
-export function member(data: Discord.GuildMember, guildID: Discord.Snowflake<Discord.Guild>) {
+export function member(data: Discord.GuildMember, guildID: Discord.GuildSnowflake) {
   return removeNull<Member>({
     _id: `${guildID}.${data.user.id}`,
     guildID,
@@ -138,7 +138,7 @@ export function member(data: Discord.GuildMember, guildID: Discord.Snowflake<Dis
 
 /* Voice State */
 
-export function voiceState(data: Partial<Discord.VoiceState>, guildID?: Discord.Snowflake<Discord.Guild>) {
+export function voiceState(data: Partial<Discord.VoiceState>, guildID?: Discord.GuildSnowflake) {
   return removeNull<Partial<VoiceState>>({
     _id: `${data.guild_id || guildID}.${data.user_id}`,
     guildID: data.guild_id || guildID,

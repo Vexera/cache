@@ -4,7 +4,7 @@ import * as Implementations from '../../implementations';
 import * as Discord from 'discord.d.ts';
 
 export class UserCache extends BaseCache implements Implementations.UserCache {
-  set(id: Discord.Snowflake<Discord.User>, data: Discord.User) {
+  set(id: Discord.UserSnowflake, data: Discord.User) {
     const converted = user(data);
 
     if (id === 'self') {
@@ -32,11 +32,11 @@ export class UserCache extends BaseCache implements Implementations.UserCache {
     else return Promise.resolve();
   }
 
-  delete(userID: Discord.Snowflake<Discord.User>) {
+  delete(userID: Discord.UserSnowflake) {
     return this.collection.deleteOne({ _id: userID });
   }
 
-  bulkDelete(userIDs: Discord.Snowflake<Discord.User>[]) {
+  bulkDelete(userIDs: Discord.UserSnowflake[]) {
     const ops = userIDs.map((_id) => ({
       deleteOne: {
         filter: { _id },
@@ -47,11 +47,11 @@ export class UserCache extends BaseCache implements Implementations.UserCache {
     else return Promise.resolve();
   }
 
-  get(userID: Discord.Snowflake<Discord.User>) {
+  get(userID: Discord.UserSnowflake) {
     return this.collection.findOne({ _id: userID });
   }
 
-  async has(userID: Discord.Snowflake<Discord.User>) {
+  async has(userID: Discord.UserSnowflake) {
     return await this.collection.find({ _id: userID }).count() > 0;
   }
 }

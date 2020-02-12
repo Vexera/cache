@@ -21,10 +21,10 @@ export interface ReceiveExtras<T = any> {
 }
 
 export interface VoiceState {
-  _id: Discord.Snowflake<Discord.Guild & Discord.GuildMember>;
-  guildID: Discord.Snowflake<Discord.Guild>;
-  channelID: Discord.Snowflake<Discord.Channel>;
-  userID: Discord.Snowflake<Discord.User>;
+  _id: Discord.GuildSnowflake & Discord.UserSnowflake;
+  guildID: Discord.GuildSnowflake;
+  channelID: Discord.ChannelSnowflake;
+  userID: Discord.UserSnowflake;
   deaf: boolean;
   mute: boolean;
   selfDeaf: boolean;
@@ -32,36 +32,36 @@ export interface VoiceState {
 }
 
 export interface Member {
-  _id: Discord.Snowflake<Discord.Guild & Discord.GuildMember>;
-  guildID: Discord.Snowflake<Discord.Guild>;
-  userID: Discord.Snowflake<Discord.User>;
+  _id: Discord.GuildSnowflake & Discord.UserSnowflake;
+  guildID: Discord.GuildSnowflake;
+  userID: Discord.UserSnowflake;
   nickname?: string;
   roles: string[];
   joinedAt: string;
 }
 
 export interface User {
-  _id: Discord.Snowflake<Discord.User>;
+  _id: Discord.UserSnowflake;
   username: string;
   discriminator: string;
   avatar?: string;
   bot: boolean;
-  selfID?: Discord.Snowflake<Discord.User>;
+  selfID?: Discord.UserSnowflake;
 }
 
 export interface Guild {
-  _id: Discord.Snowflake<Discord.Guild>;
+  _id: Discord.GuildSnowflake;
   name: string;
   icon: string;
-  ownerID: Discord.Snowflake<Discord.User>;
+  ownerID: Discord.UserSnowflake;
   region: string;
   unavailable: boolean;
   roles: Role[];
 }
 
 export interface Role {
-  id: Discord.Snowflake<Discord.Role>;
-  guildID: Discord.Snowflake<Discord.Guild>;
+  id: Discord.RoleSnowflake;
+  guildID: Discord.GuildSnowflake;
   name: string;
   color?: number;
   position: number;
@@ -71,8 +71,8 @@ export interface Role {
 export type Channel = GuildTextChannel | GuildVoiceChannel | GuildStoreChannel | GuildNewsChannel | GuildCategory;
 
 export interface BaseChannel {
-  _id: Discord.Snowflake<Discord.Channel>;
-  guildID: Discord.Snowflake<Discord.Guild>;
+  _id: Discord.ChannelSnowflake;
+  guildID: Discord.GuildSnowflake;
   name: string;
   type: Discord.ChannelType;
   position: number;
@@ -82,13 +82,13 @@ export interface GuildTextChannel extends BaseChannel {
   type: Discord.ChannelType.GUILD_TEXT;
   nsfw: boolean;
   topic?: string;
-  parentID: Discord.Snowflake<Discord.Channel>;
+  parentID: Discord.ChannelSnowflake;
   overwrites: Overwrite[];
 }
 
 export interface GuildVoiceChannel extends BaseChannel {
   type: Discord.ChannelType.GUILD_VOICE;
-  parentID: Discord.Snowflake<Discord.Channel>;
+  parentID: Discord.ChannelSnowflake;
   bitrate: number;
   userLimit: number;
   overwrites: Overwrite[];
@@ -96,12 +96,12 @@ export interface GuildVoiceChannel extends BaseChannel {
 
 export interface GuildStoreChannel extends BaseChannel {
   type: Discord.ChannelType.GUILD_STORE;
-  parentID: Discord.Snowflake<Discord.Channel>;
+  parentID: Discord.ChannelSnowflake;
 }
 
 export interface GuildNewsChannel extends BaseChannel {
   type: Discord.ChannelType.GUILD_NEWS;
-  parentID: Discord.Snowflake<Discord.Channel>;
+  parentID: Discord.ChannelSnowflake;
   nsfw: boolean;
   topic?: string;
   overwrites: Overwrite[];
@@ -113,7 +113,7 @@ export interface GuildCategory extends BaseChannel {
 }
 
 export interface Overwrite {
-  id: Discord.Snowflake<Discord.User | Discord.Role>;
+  id: Discord.UserSnowflake | Discord.RoleSnowflake;
   type: Discord.PermissionOverwriteType;
   allow: number;
   deny: number;

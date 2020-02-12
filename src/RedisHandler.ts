@@ -45,12 +45,12 @@ export default class RedisHandler {
 
   /* Guild Queue */
 
-  async appendGuildQueue(guildID: Discord.Snowflake<Discord.Guild>, event: Event) {
+  async appendGuildQueue(guildID: Discord.GuildSnowflake, event: Event) {
     await this.redis.rpush(`guild:${guildID}:queue`, JSON.stringify(event));
     await this.redis.expire(`guild:${guildID}:queue`, 30);
   }
 
-  async popGuildQueue(guildID: Discord.Snowflake<Discord.Guild>): Promise<Event | null> {
+  async popGuildQueue(guildID: Discord.GuildSnowflake): Promise<Event | null> {
     const event = await this.redis.lpop(`guild:${guildID}:queue`);
 
     if(event) return JSON.parse(event);
@@ -59,11 +59,11 @@ export default class RedisHandler {
 
   /* Guild Deleted */
 
-  setGuildDeleted(guildID: Discord.Snowflake<Discord.Guild>) {
+  setGuildDeleted(guildID: Discord.GuildSnowflake) {
     return this.redis.set(`guild:${guildID}:deleted`, '1', 'EX', 5);
   }
 
-  async isGuildDeleted(guildID: Discord.Snowflake<Discord.Guild>) {
+  async isGuildDeleted(guildID: Discord.GuildSnowflake) {
     return !!await this.redis.exists(`guild:${guildID}:deleted`);
   }
 }

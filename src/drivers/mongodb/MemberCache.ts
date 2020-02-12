@@ -5,7 +5,7 @@ import * as Discord from 'discord.d.ts';
 import { Member, Guild } from '../../types';
 
 export class MemberCache extends BaseCache implements Implementations.MemberCache {
-  bulkAdd(shardID: number, guildID: Discord.Snowflake<Discord.Guild>, members: Discord.GuildMember[]) {
+  bulkAdd(shardID: number, guildID: Discord.GuildSnowflake, members: Discord.GuildMember[]) {
     const ops = members.map((m) => ({
       updateOne: {
         filter: { _id: `${guildID}.${m.user.id}` },
@@ -20,25 +20,25 @@ export class MemberCache extends BaseCache implements Implementations.MemberCach
     else return Promise.resolve();
   }
 
-  set(shardID: number, guildID: Discord.Snowflake<Discord.Guild>, member: Discord.GuildMember) {
+  set(shardID: number, guildID: Discord.GuildSnowflake, member: Discord.GuildMember) {
     const data = { ...memberConverter(member, guildID), shardID };
 
     return this.collection.updateOne({ _id: data._id }, { $set: data }, { upsert: true });
   }
 
-  get(guildID: Discord.Snowflake<Discord.Guild>, memberID: Discord.Snowflake<Discord.User>): Promise<Member | null> {
+  get(guildID: Discord.GuildSnowflake, memberID: Discord.UserSnowflake): Promise<Member | null> {
     return this.collection.findOne({ _id: `${guildID}.${memberID}` });
   }
 
-  delete(guildID: Discord.Snowflake<Discord.Guild>, memberID: Discord.Snowflake<Discord.User>) {
+  delete(guildID: Discord.GuildSnowflake, memberID: Discord.UserSnowflake) {
     return this.collection.findOne({ _id: `${guildID}.${memberID}` });
   }
 
-  getMutualGuilds(userID: Discord.Snowflake<Discord.User>): Promise<Guild[]> {
+  getMutualGuilds(userID: Discord.UserSnowflake): Promise<Guild[]> {
     return this.collection.find({ userID }).toArray();
   }
 
-  getPurgeableUsers(guildID: Discord.Snowflake<Discord.Guild>) {
+  getPurgeableUsers(guildID: Discord.GuildSnowflake) {
     return this.collection.aggregate([
       { $match: { guildID } }, // Filter by the deleted guild
       {
@@ -58,11 +58,11 @@ export class MemberCache extends BaseCache implements Implementations.MemberCach
     ]).toArray().then(r => r.map(x => x.userID));
   }
 
-  deleteByGuild(guildID: Discord.Snowflake<Discord.Guild>) {
+  deleteByGuild(guildID: Discord.GuildSnowflake) {
     return this.collection.deleteMany({ guildID });
   }
 
-  async has(guildID: Discord.Snowflake<Discord.Guild>, memberID: Discord.Snowflake<Discord.User>) {
+  async has(guildID: Discord.GuildSnowflake, memberID: Discord.UserSnowflake) {
     return await this.collection.find({ _id: `${guildID}.${memberID}` }).count() > 0;
   }
 }

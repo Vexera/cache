@@ -24,15 +24,15 @@ export class ChannelCache extends BaseCache implements Implementations.ChannelCa
     return this.collection.updateOne({ _id: data._id }, { $set: data }, { upsert: true });
   }
 
-  delete(channelID: Discord.Snowflake<Discord.Channel>) {
+  delete(channelID: Discord.ChannelSnowflake) {
     return this.collection.deleteOne({ _id: channelID });
   }
 
-  get(channelID: Discord.Snowflake<Discord.Channel>) {
+  get(channelID: Discord.ChannelSnowflake) {
     return this.collection.findOne({ _id: channelID });
   }
 
-  async has(channelID: Discord.Snowflake<Discord.Channel>) {
+  async has(channelID: Discord.ChannelSnowflake) {
     return await this.collection.find({ _id: channelID }).count() > 0;
   }
 }
