@@ -1,6 +1,6 @@
 import { Shard } from '@spectacles/gateway';
 import Cache from '../src';
-import * as MongoDB from '../src/drivers/mongodb';
+import { MongoDB } from '../src';
 import Redis from 'ioredis';
 import { MongoClient } from 'mongodb';
 

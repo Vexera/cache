@@ -1,6 +1,6 @@
 {
   "name": "@vexera/cache",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Discord State Cache",
   "main": "dist/src/index.js",
   "types": "types/src/index.d.ts",
